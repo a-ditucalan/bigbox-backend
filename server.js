@@ -1,3 +1,4 @@
+require('dotenv').config()
 const express = require('express')
 const mongoose = require('mongoose')
 const morgan = require('morgan')
@@ -5,7 +6,7 @@ const bodyParser = require('body-parser')
 const ItemRoute = require('./routes/item')
 const AuthRoute = require('./routes/user')
 const StatusRoute = require('./routes/status')
-mongoose.connect('mongodb://localhost:27017/bigboxdb',{useNewUrlParser: true, useUnifiedTopology: true})
+mongoose.connect(process.env.MONGO_DB,{useNewUrlParser: true, useUnifiedTopology: true})
 
 const db = mongoose.connection
 mongoose.Promise = global.Promise
