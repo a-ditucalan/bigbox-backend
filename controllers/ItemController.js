@@ -45,7 +45,6 @@ const store = (req,res,next)=> {
   numberOfBox: req.body.numberOfBox,
   trackingNumber: req.body.trackingNumber,
   notes: req.body.notes,
-  itemDate: req.body.itemDate
 })
 item.save().then(response => {
   res.json({message: 'Item Added Successfully!'})
@@ -67,16 +66,17 @@ const update = (req,res,next)=> {
     numberOfBox: req.body.numberOfBox,
     trackingNumber: req.body.trackingNumber,
     notes: req.body.notes,
-    itemDate: req.body.itemDate
+    itemDate: req.body.itemDate,
+    containerNumber: req.body.containerNumber
   }
 
   Item.findByIdAndUpdate(itemID, {$set: updateData}).then(
     ()=> {
-      res.json({message: 'Item updated succesully!'}).catch(error => {
-        res.json({error: error,message: 'An error Occured'})
-      })
+      res.json({message: 'Item updated succesully!'})
     }
-  )
+  ).catch(error => {
+    res.json({error: error,message: 'An error Occured'})
+  })
 }
 
 //delete an item

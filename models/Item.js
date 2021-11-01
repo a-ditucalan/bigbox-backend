@@ -12,11 +12,7 @@ const ItemSchema = new Schema({
     type: String,
     required: [true, "Shipping mark is required!"],
   },
-  itemName:{
-    type: String,
-    required: [true, "item name is required!"],
-   
-  },
+
   cbm: {
     type: Number,
     required: [true, "CBM is required!"],
@@ -36,12 +32,16 @@ const ItemSchema = new Schema({
   },
   notes: {
     type: String,
+    default: ''
   },
+
   itemDate: {
     type: Date,
     required: true, 
     default: Date.now
-  }
+  },  containerNumber:{
+    type: String,
+  },
 },{timestamps: true})
 
 const Item = mongoose.model('Item', ItemSchema)
