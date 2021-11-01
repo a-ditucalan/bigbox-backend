@@ -49,7 +49,7 @@ const bcrypt = require('bcryptjs')
               let token = jwt.sign({name: user.name}, 'fsdfsd32')
                 res.json({
                   message: 'Login Successful!',
-                  token,user_id: user.id, user_role: user.role
+                  token,user_id: user.id, user_role: user.role,user.name
                 })
             } else {
               res.json({
