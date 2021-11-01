@@ -6,7 +6,7 @@ const bodyParser = require('body-parser')
 const ItemRoute = require('./routes/item')
 const AuthRoute = require('./routes/user')
 const StatusRoute = require('./routes/status')
-mongoose.connect("mongodb+srv://anuar:anuar@bigbox.zkdgy.mongodb.net/bigboxDB?retryWrites=true&w=majority",{useNewUrlParser: true, useUnifiedTopology: true})
+mongoose.connect(process.env.MONGO_DB,{useNewUrlParser: true, useUnifiedTopology: true})
 
 const db = mongoose.connection
 mongoose.Promise = global.Promise
