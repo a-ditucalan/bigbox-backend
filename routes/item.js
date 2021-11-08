@@ -9,6 +9,7 @@ router.get('/show/:id',authenticate, ItemController.show)
 router.post('/store',authenticate,ItemController.store)
 router.post('/update/:id',authenticate,ItemController.update)
 router.post('/delete',authenticate,ItemController.destroy)
+router.post('/search',authenticate,ItemController.search)
 
 
 //

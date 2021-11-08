@@ -3,8 +3,8 @@ const Item = require('../models/Item')
 
 //show the list of employees
 const index = (req,res,next) => {
-  const {page = 1, limit = 2, search= ''} = req.query;
-  Item.find(search ? {name: search} : {}).limit(limit *1).skip((page -1) * limit).then(response => {
+  const {page = 1, limit = 20, search= ''} = req.query;
+  Item.find(search ? {shippingMark: {$regex : search}} : {}).limit(limit *1).skip((page -1) * limit).then(response => {
     res.json({count: response.length,response})
   }).catch(error => {
     res.json({message: 'An error Occured!'})
@@ -89,6 +89,35 @@ const destroy = (req,res,next)=> {
       res.json({error: error, message: 'An error Occured'})
   })
 }
+
+
+//search an item
+
+const search = (req,res,next)=> {
+
+  try {
+    if(!req.body) {
+      res.status(200).json({message:"Missing Content"})
+    } else {
+      Item.find({shippingMark: req.body.shippingMark}).then(response => {
+        res.json({count: response.length,response})
+      }).catch(error => {
+        res.json({message: 'An error Occured!'})
+      })
+    }
+  } catch (error) {
+    res.status(500).json({message: "error Occured"})
+  }
+
+
+  //delete
+  let itemID = req.body.itemID
+  Item.findByIdAndDelete(itemID).then(()=>{
+    res.json({message: 'Item deleted successfully!'})
+    }).catch(error => {
+      res.json({error: error, message: 'An error Occured'})
+  })
+}
 module.exports = {
-  index,show, store,update,destroy,indexPagination
+  index,show, store,update,destroy,indexPagination,search
 }
