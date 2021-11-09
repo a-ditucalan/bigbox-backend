@@ -1,18 +1,26 @@
 const mongoose = require('mongoose')
+
 const Schema = mongoose.Schema
 
 const ItemSchema = new Schema({
   status: {
     type: String,
     required: true,
-    default: 'Guangzhou Warehouse'
+    default: 'China Warehouse'
   },
 
   shippingMark: {
     type: String,
     required: [true, "Shipping mark is required!"],
   },
-
+  itemName: {
+    type: String,
+    required: [true, "Item Name is required!"],
+  },
+  warehouse: {
+    type: String,
+    required: [true, "Warehouse is required!"],
+  },
   cbm: {
     type: Number,
     required: [true, "CBM is required!"],
@@ -38,7 +46,7 @@ const ItemSchema = new Schema({
   itemDate: {
     type: Date,
     required: true, 
-    default: Date.now
+    default: Date.now(),
   },  containerNumber:{
     type: String,
   },

@@ -1,10 +1,14 @@
 const { response } = require('express')
 const Item = require('../models/Item')
+const moment = require('moment'); // require
 
 //show the list of employees
 const index = (req,res,next) => {
+//   var startDate = moment(req.query.startDate).format("YYYY-MM-DDTHH:mm:ss.SSSZ"); //req.params.startTime = 2016-09-25 00:00:00
+// var endDate   = moment(req.query.endDate).format("YYYY-MM-DDTHH:mm:ss.SSSZ"); //req.params.endTime = 2016-09-25 01:00:00
+console.log(req.query.startDate + 'T00:00:00.000Z')
   const {page = 1, limit = 20, search= ''} = req.query;
-  Item.find(search ? {shippingMark: {$regex : search}} : {}).limit(limit *1).skip((page -1) * limit).then(response => {
+  Item.find(search ? {shippingMark: {$regex : search}} : req.query.startDate ? {itemDate : { $gt: req.query.startDate + 'T00:00:00.000Z', $lt: req.query.endDate  + 'T23:59:59.999Z'}} : {} ).limit(limit *1).skip((page -1) * limit).then(response => {
     res.json({count: response.length,response})
   }).catch(error => {
     res.json({message: 'An error Occured!'})
@@ -39,6 +43,7 @@ const store = (req,res,next)=> {
   let item = new Item({
   status: req.body.status,
   shippingMark: req.body.shippingMark,
+  warehouse:  req.body.warehouse,
   itemName: req.body.itemName,
   cbm: req.body.cbm,
   kilo: req.body.kilo,
@@ -60,6 +65,7 @@ const update = (req,res,next)=> {
   let updateData = {
     status: req.body.status,
     shippingMark: req.body.shippingMark,
+    warehouse:  req.body.warehouse,
     itemName: req.body.itemName,
     cbm: req.body.cbm,
     kilo: req.body.kilo,
